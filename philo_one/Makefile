@@ -1,8 +1,10 @@
 NAME = philo_one
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 FILES_C = main.c\
+		  utils.c\
+		  get.c\
 
 FILES_O = $(addprefix objs/, $(FILES_C))
 
