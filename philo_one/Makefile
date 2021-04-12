@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes
 FILES_C = main.c\
 		  utils.c\
 		  get.c\
+		  start.c\
 
 FILES_O = $(addprefix objs/, $(FILES_C))
 

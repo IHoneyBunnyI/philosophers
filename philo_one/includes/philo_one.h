@@ -24,5 +24,6 @@ int				ft_atoi(char *str);
 int				get_args(t_all *all, int ac, char **av);
 void			get_others_args(t_all *all, char **av);
 void			get_times_eat(t_all *all, int ac, char **av);
+void			start(t_all *all);
 
 #endif
