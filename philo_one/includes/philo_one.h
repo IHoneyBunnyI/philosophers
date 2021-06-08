@@ -11,6 +11,8 @@
 typedef struct	s_philo
 {
 	int id;
+	int left_fork;
+	int right_fork;
 }	t_philo;
 
 typedef struct	s_all
@@ -21,6 +23,7 @@ typedef struct	s_all
 	int	t_sleep;
 	int times_eat;
 	unsigned long start;
+	pthread_mutex_t	*forks;
 	t_philo *philo;
 }				t_all;
 
