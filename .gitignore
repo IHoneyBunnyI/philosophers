@@ -1,3 +1,4 @@
 *.o
 *.a
 .DS*
+compile_flags.txt

@@ -1,20 +1,35 @@
 #include "philo_one.h"
+#include <stdio.h>
 
-unsigned long		my_time()
+void	*routine(void *this_philo)
 {
-	struct timeval	t_time;
+	t_philo *philo;
 
-	gettimeofday(&t_time, 0);
-	return ((t_time.tv_sec * 1000) + (t_time.tv_usec / 10000));
+	philo = this_philo;
+	int i = 0;
+	while (i < 10)
+	{
+		printf(" pthread %d %d\n", philo->id, i);
+		usleep(1);
+		i++;
+	}
+	return 0;
 }
 
-void				start(t_all *all)
+void				start(t_all *p)
 {
-	unsigned long start = my_time();
-	while (1)
+	pthread_t th;
+	int	i;
+
+	i = -1;
+	while (++i < p->philosophers)
+		p->philo[i].id = i + 1;
+	p->start = my_time();
+	i = -1;
+	while (++i < p->philosophers)
 	{
-		printf("%lu\n", my_time() - start);
-		//printf("%ld\n", t_time.tv_sec);
+		pthread_create(&th, 0, &routine, &p->philo[i]);
+		usleep(100);
 	}
-	(void)all;
+	pthread_detach(th);
 }

@@ -36,8 +36,6 @@ int		get_args(t_all *all, int ac, char **av)
 	int i;
 
 	i = -1;
-	(void)ac;
-	(void)all;
 	while (av[++i])
 	{
 		if (!valid_arg(av[i]))

@@ -8,6 +8,11 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct	s_philo
+{
+	int id;
+}	t_philo;
+
 typedef struct	s_all
 {
 	int	philosophers;
@@ -15,15 +20,19 @@ typedef struct	s_all
 	int	t_eat;
 	int	t_sleep;
 	int times_eat;
+	unsigned long start;
+	t_philo *philo;
 }				t_all;
 
-void			error(t_all *all, int i);
-void			free_all(t_all *all);
-void			init_all(t_all *all);
-int				ft_atoi(char *str);
-int				get_args(t_all *all, int ac, char **av);
-void			get_others_args(t_all *all, char **av);
-void			get_times_eat(t_all *all, int ac, char **av);
-void			start(t_all *all);
+void	error(t_all *all, int i);
+void	free_all(t_all *all);
+void	init_all(t_all *all);
+int	ft_atoi(char *str);
+int	get_args(t_all *all, int ac, char **av);
+void	get_others_args(t_all *all, char **av);
+void	get_times_eat(t_all *all, int ac, char **av);
+void	start(t_all *all);
+unsigned long	my_time();
+void	ft_putnbr(unsigned long n);
 
 #endif
