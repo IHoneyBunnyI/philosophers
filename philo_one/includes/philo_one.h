@@ -8,8 +8,11 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+struct s_all;
+
 typedef struct	s_philo
 {
+	struct s_all *p;
 	int id;
 	int left_fork;
 	int right_fork;

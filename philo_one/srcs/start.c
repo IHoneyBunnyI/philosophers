@@ -9,15 +9,16 @@ void	*routine(void *this_philo)
 	return (0);
 }
 
-void				start(t_all *p)
+void				start(t_all *all)
 {
 	pthread_t th;
 	int	i;
 
-	p->start = my_time();
-	while (++i < p->philosophers)
+	i = -1;
+	all->start = my_time();
+	while (++i < all->philosophers)
 	{
-		pthread_create(&th, 0, &routine, &p->philo[i]);
+		pthread_create(&th, 0, &routine, &all->philo[i]);
 		usleep(100);
 	}
 	pthread_detach(th);

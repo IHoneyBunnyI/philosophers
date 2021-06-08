@@ -1,7 +1,7 @@
 NAME = philo_one
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -g -Wall -Wextra -Werror -Iincludes
 FILES_C = main.c\
 		  utils.c\
 		  get.c\
