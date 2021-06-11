@@ -7,6 +7,9 @@
 # include  <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# define THINKING 1
+# define EATING 2
+# define SLEEPING 3
 
 struct s_all;
 
@@ -16,6 +19,8 @@ typedef struct	s_philo
 	int id;
 	int left_fork;
 	int right_fork;
+	int state;
+	int eat_times;
 }	t_philo;
 
 typedef struct	s_all

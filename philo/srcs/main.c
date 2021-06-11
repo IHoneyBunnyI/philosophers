@@ -32,9 +32,6 @@ void	init_philos_forks(t_all *all)
 	if (!all->philo)
 		error(all, 2);
 	while (++i < all->philosophers_number)
-		all->philo[i].id = i + 1;
-	i = -1;
-	while (++i < all->philosophers_number)
 	{
 		if (i == all->philosophers_number - 1)
 		{
@@ -46,9 +43,12 @@ void	init_philos_forks(t_all *all)
 			all->philo[i].left_fork = i;
 			all->philo[i].right_fork = i + 1;
 		}
+		all->philo[i].all = all;
+		all->philo[i].state = THINKING;
+		all->philo[i].id = i + 1;
+		all->philo[i].eat_times = 0;
 	}
 	init_forks(all);
-
 }
 
 int		main(int ac, char **av)

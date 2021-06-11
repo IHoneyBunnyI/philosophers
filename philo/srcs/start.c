@@ -7,6 +7,8 @@ void	*routine(void *this_philo)
 
 	philo = this_philo;
 	printf("im %d left: %d right %d\n", philo->id, philo->left_fork, philo->right_fork);
+	if (philo->id % 2 == 1)
+		philo->state = 0;
 	return (0);
 }
 
