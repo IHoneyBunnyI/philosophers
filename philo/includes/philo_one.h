@@ -12,7 +12,7 @@ struct s_all;
 
 typedef struct	s_philo
 {
-	struct s_all *p;
+	struct s_all *all;
 	int id;
 	int left_fork;
 	int right_fork;
@@ -20,7 +20,7 @@ typedef struct	s_philo
 
 typedef struct	s_all
 {
-	int	philosophers;
+	int	philosophers_number;
 	int	t_die;
 	int	t_eat;
 	int	t_sleep;

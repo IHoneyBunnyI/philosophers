@@ -2,3 +2,4 @@
 *.a
 .DS*
 compile_flags.txt
+philo

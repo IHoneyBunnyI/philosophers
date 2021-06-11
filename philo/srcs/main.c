@@ -2,7 +2,7 @@
 
 void	init_all(t_all *all)
 {
-	all->philosophers = 0;
+	all->philosophers_number = 0;
 	all->t_die = 0;
 	all->t_eat = 0;
 	all->t_sleep = 0;
@@ -16,10 +16,10 @@ void	init_forks(t_all *all)
 	int i;
 
 	i = -1;
-	all->forks = malloc(sizeof(pthread_mutex_t) * all->philosophers);
+	all->forks = malloc(sizeof(pthread_mutex_t) * all->philosophers_number);
 	if (!all->forks)
 		error(all, 2);
-	while (++i < all->philosophers)
+	while (++i < all->philosophers_number)
 		pthread_mutex_init(&all->forks[i], 0);
 }
 
@@ -28,12 +28,24 @@ void	init_philos_forks(t_all *all)
 	int i;
 
 	i = -1;
-	all->philo = malloc(sizeof(t_philo) * all->philosophers);
+	all->philo = malloc(sizeof(t_philo) * all->philosophers_number);
 	if (!all->philo)
 		error(all, 2);
-	while (++i < all->philosophers)
-	{
+	while (++i < all->philosophers_number)
 		all->philo[i].id = i + 1;
+	i = -1;
+	while (++i < all->philosophers_number)
+	{
+		if (i == all->philosophers_number - 1)
+		{
+			all->philo[i].left_fork = i;
+			all->philo[i].right_fork = 0;
+		}
+		else 
+		{
+			all->philo[i].left_fork = i;
+			all->philo[i].right_fork = i + 1;
+		}
 	}
 	init_forks(all);
 
