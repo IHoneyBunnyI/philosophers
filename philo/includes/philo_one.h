@@ -10,6 +10,7 @@
 # define THINKING 1
 # define EATING 2
 # define SLEEPING 3
+# define DIED 4
 
 struct s_all;
 
@@ -29,10 +30,11 @@ typedef struct	s_all
 	int	t_die;
 	int	t_eat;
 	int	t_sleep;
-	int times_eat;
+	int	times_eat;
 	unsigned long start;
 	pthread_mutex_t	*forks;
 	t_philo *philo;
+	int	end;
 }				t_all;
 
 void	error(t_all *all, int i);

@@ -9,6 +9,7 @@ void	init_all(t_all *all)
 	all->times_eat = -1;
 	all->start = 0;
 	all->philo = 0;
+	all->end = 0;
 }
 
 void	init_forks(t_all *all)
