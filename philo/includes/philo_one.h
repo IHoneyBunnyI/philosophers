@@ -21,7 +21,7 @@ typedef struct	s_philo
 	int left_fork;
 	int right_fork;
 	int state;
-	int eat_times;
+	int times_eat;
 }	t_philo;
 
 typedef struct	s_all
@@ -30,9 +30,11 @@ typedef struct	s_all
 	int	t_die;
 	int	t_eat;
 	int	t_sleep;
-	int	times_eat;
+	int	parsed_times_eat;
 	unsigned long start;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	write;
+	pthread_mutex_t	end_mutex;
 	t_philo *philo;
 	int	end;
 }				t_all;
@@ -47,5 +49,6 @@ void	get_times_eat(t_all *all, int ac, char **av);
 void	start(t_all *all);
 unsigned long	my_time();
 void	ft_putnbr(unsigned long n);
+void	*start_life(void *this_philo);
 
 #endif

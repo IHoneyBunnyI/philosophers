@@ -6,7 +6,7 @@ void	init_all(t_all *all)
 	all->t_die = 0;
 	all->t_eat = 0;
 	all->t_sleep = 0;
-	all->times_eat = -1;
+	all->parsed_times_eat = -1;
 	all->start = 0;
 	all->philo = 0;
 	all->end = 0;
@@ -24,7 +24,13 @@ void	init_forks(t_all *all)
 		pthread_mutex_init(&all->forks[i], 0);
 }
 
-void	init_philos_forks(t_all *all)
+void	init_mutex(t_all *all)
+{
+	pthread_mutex_init(&all->write, 0);
+	pthread_mutex_init(&all->end_mutex, 0);
+}
+
+void	init_philos(t_all *all)
 {
 	int i;
 
@@ -47,15 +53,15 @@ void	init_philos_forks(t_all *all)
 		all->philo[i].all = all;
 		all->philo[i].state = THINKING;
 		all->philo[i].id = i + 1;
-		all->philo[i].eat_times = 0;
+		all->philo[i].times_eat = 0;
 	}
-	init_forks(all);
 }
 
 int		main(int ac, char **av)
 {
-	t_all all;
-	int i;
+	t_all		all;
+	int		i;
+	pthread_t	th;
 
 	i = -1;
 	init_all(&all);
@@ -63,7 +69,12 @@ int		main(int ac, char **av)
 		error(&all, 1);
 	if (!get_args(&all, ac, av + 1))
 		error(&all, 1);
-	init_philos_forks(&all);
-	start(&all);
+	init_philos(&all);
+	init_forks(&all);
+	init_mutex(&all);
+	i = -1;
+	while (++i < all.philosophers_number)
+		pthread_create(&th, 0, start_life, &all.philo[i]);
+	pthread_detach(th);
 	return 0;
 }

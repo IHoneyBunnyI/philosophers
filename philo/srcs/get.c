@@ -25,11 +25,13 @@ int		get_args(t_all *all, int ac, char **av)
 	}
 	if (ac == 6)
 	{
-		all->times_eat = ft_atoi(av[ac -2]);
-		if (all->times_eat == 0)
+		all->parsed_times_eat = ft_atoi(av[ac - 2]);
+		if (all->parsed_times_eat == 0)
 			error(all, 1);
 	}
 	all->philosophers_number = ft_atoi(av[0]);
+	if (all->philosophers_number == 1)
+		error(all, 1);
 	all->t_die = ft_atoi(av[1]);
 	all->t_eat = ft_atoi(av[2]);
 	all->t_sleep = ft_atoi(av[3]);
