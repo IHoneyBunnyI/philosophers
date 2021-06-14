@@ -1,4 +1,5 @@
 #include "philo_one.h"
+#include <pthread.h>
 
 void	init_all(t_all *all)
 {
@@ -75,6 +76,6 @@ int		main(int ac, char **av)
 	i = -1;
 	while (++i < all.philosophers_number)
 		pthread_create(&th, 0, start_life, &all.philo[i]);
-	pthread_detach(th);
+	pthread_join(th, 0);
 	return 0;
 }
