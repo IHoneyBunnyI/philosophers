@@ -1,5 +1,3 @@
-*.o
 *.a
-.DS*
+*.o
 compile_flags.txt
-philo
