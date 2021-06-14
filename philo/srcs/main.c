@@ -74,6 +74,7 @@ int		main(int ac, char **av)
 	init_forks(&all);
 	init_mutex(&all);
 	i = -1;
+	all.start = my_time();
 	while (++i < all.philosophers_number)
 		pthread_create(&th, 0, start_life, &all.philo[i]);
 	pthread_join(th, 0);

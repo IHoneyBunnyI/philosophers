@@ -30,6 +30,9 @@ void	eat(t_philo *philo)
 	printf("%lu %d take a right fork\n", my_time() - philo->all->start, philo->id);
 	pthread_mutex_unlock(WRITE);
 	philo->state = EATING;
+	pthread_mutex_lock(WRITE);
+	printf("%lu %d is eating\n", my_time() - philo->all->start, philo->id);
+	pthread_mutex_unlock(WRITE);
 	usleep(philo->all->t_eat * 1000);
 	pthread_mutex_unlock(LEFT_FORK);
 	pthread_mutex_unlock(RIGHT_FORK);
