@@ -48,16 +48,9 @@ unsigned long	my_time()
 	return ((t_time.tv_sec * 1000) + (t_time.tv_usec / 10000));
 }
 
-void	ft_putnbr(unsigned long n)
+void	printf_msg(char *msg, t_philo *philo)
 {
-	char	c;
-
-	if (n >= 10)
-	{
-		ft_putnbr(n / 10);
-		c = n % 10 + '0';
-	}
-	else
-		c = n + '0';
-	write(1, &c, 1);
+	pthread_mutex_lock(WRITE);
+	printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
+	pthread_mutex_unlock(WRITE);
 }

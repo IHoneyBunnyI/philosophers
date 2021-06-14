@@ -8,31 +8,20 @@
 void	sleep_think(t_philo *philo)
 {
 	philo->state = SLEEPING;
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d is sleeping\n", my_time() - philo->all->start, philo->id);
-	pthread_mutex_unlock(WRITE);
+	printf_msg("is sleeping", philo);
 	usleep(philo->all->t_sleep * 1000);
 	philo->state = THINKING;
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d is thinking\n", my_time() - philo->all->start, philo->id);
-	pthread_mutex_unlock(WRITE);
-
+	printf_msg("is thinking", philo);
 }
 
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(LEFT_FORK);
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d take a left fork\n", my_time() - philo->all->start, philo->id);
-	pthread_mutex_unlock(WRITE);
+	printf_msg("take a left fork", philo);
 	pthread_mutex_lock(RIGHT_FORK);
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d take a right fork\n", my_time() - philo->all->start, philo->id);
-	pthread_mutex_unlock(WRITE);
+	printf_msg("take a right fork", philo);
 	philo->state = EATING;
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d is eating\n", my_time() - philo->all->start, philo->id);
-	pthread_mutex_unlock(WRITE);
+	printf_msg("is eating", philo);
 	usleep(philo->all->t_eat * 1000);
 	pthread_mutex_unlock(LEFT_FORK);
 	pthread_mutex_unlock(RIGHT_FORK);

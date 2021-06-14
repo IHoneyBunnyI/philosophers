@@ -11,6 +11,9 @@
 # define EATING 2
 # define SLEEPING 3
 # define DIED 4
+# define LEFT_FORK &philo->all->forks[philo->left_fork]
+# define RIGHT_FORK &philo->all->forks[philo->right_fork]
+#define WRITE &philo->all->write
 
 struct s_all;
 
@@ -50,5 +53,6 @@ void	start(t_all *all);
 unsigned long	my_time();
 void	ft_putnbr(unsigned long n);
 void	*start_life(void *this_philo);
+void	printf_msg(char *msg, t_philo *philo);
 
 #endif
