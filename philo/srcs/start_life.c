@@ -22,6 +22,7 @@ void	eat(t_philo *philo)
 	printf_msg("take a right fork", philo);
 	philo->state = EATING;
 	printf_msg("is eating", philo);
+	/*printf("time : %d\n", philo->all->t_eat * 1000);*/
 	usleep(philo->all->t_eat * 1000);
 	pthread_mutex_unlock(LEFT_FORK);
 	pthread_mutex_unlock(RIGHT_FORK);
@@ -38,7 +39,6 @@ void	*start_life(void *this_philo)
 	{
 		eat(philo);
 		sleep_think(philo);
-		/*printf("id %d\n", philo->id);*/
 	}
 	return (0);
 }

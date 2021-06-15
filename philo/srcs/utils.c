@@ -45,7 +45,7 @@ unsigned long	my_time()
 	struct timeval	t_time;
 
 	gettimeofday(&t_time, 0);
-	return ((t_time.tv_sec * 1000) + (t_time.tv_usec / 10000));
+	return ((t_time.tv_sec * 1000) + (t_time.tv_usec / 1000));
 }
 
 void	printf_msg(char *msg, t_philo *philo)
