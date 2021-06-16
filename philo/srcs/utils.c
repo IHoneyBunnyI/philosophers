@@ -12,7 +12,7 @@ void	error(t_all *all, int i)
 	if (i == 2)
 		printf("\033[31;4mERROR: malloc\033[0m\n");
 	if (i == 3)
-		printf("\033[31;4mERROR: WWWWWWWWWWWWWW\033[0m\n");
+		printf("\033[31;4mERROR: start simulation\033[0m\n");
 	free_all(all);
 	exit(0);
 }

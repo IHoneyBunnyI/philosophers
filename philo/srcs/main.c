@@ -76,7 +76,8 @@ int		main(int ac, char **av)
 	i = -1;
 	all.start = my_time();
 	while (++i < all.philosophers_number)
-		pthread_create(&th, 0, start_life, &all.philo[i]);
+		if (pthread_create(&th, 0, start_life, &all.philo[i]))
+			error(&all, 3);
 	pthread_join(th, 0);
 	return 0;
 }

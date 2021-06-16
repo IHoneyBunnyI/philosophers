@@ -25,6 +25,7 @@ typedef struct	s_philo
 	int right_fork;
 	int state;
 	int times_eat;
+	int time_of_death;
 }	t_philo;
 
 typedef struct	s_all
