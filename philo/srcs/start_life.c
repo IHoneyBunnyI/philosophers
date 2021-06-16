@@ -67,6 +67,9 @@ void	*start_life(void *this_philo)
 	while (!philo->all->end)
 		eat_slepp_think(philo);
 	if (philo->all->end)
-		printf("DIED\n");
+	{
+		pthread_mutex_lock(&philo->all->write);
+		/*printf("%lu %d died\n", my_time() - philo->all->start, philo->id);*/
+	}
 	return (0);
 }

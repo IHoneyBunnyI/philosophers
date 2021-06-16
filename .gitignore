@@ -1,3 +1,4 @@
 *.a
 *.o
 compile_flags.txt
+philo/philo
