@@ -20,16 +20,19 @@ void	*check_life(void *this_philo)
 	t_philo *philo;
 
 	philo = this_philo;
-	/*philo->time_of_death = my_time() + philo->all->t_die;*/
 	/*printf("%d\n", philo->all->parsed_times_eat);*/
 	while (!philo->all->end)
 	{
-		/*printf("%d\n", philo->all->parsed_times_eat);*/
 		if (philo->times_eat == philo->all->parsed_times_eat)
-		{
-			/*pthread_mutex_lock(&philo->all->write);*/
 			philo->all->end = 1;
+		if (!philo->all->end && philo->state != EATING && my_time() > philo->time_of_death)
+		{
+			philo->all->end = 1;
+			pthread_mutex_lock(&philo->all->write);
+			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
+			pthread_mutex_unlock(&philo->all->write);
 		}
+		usleep(500);
 	}
 	return (0);
 }
@@ -40,6 +43,7 @@ void	eat_slepp_think(t_philo *philo)
 	printf_msg("take a left fork", philo);
 	pthread_mutex_lock(RIGHT_FORK);
 	printf_msg("take a right fork", philo);
+	philo->time_of_death = my_time() + philo->all->t_die;
 	philo->state = EATING;
 	philo->times_eat++;
 	printf_msg("is eating", philo);
@@ -62,6 +66,7 @@ void	*start_life(void *this_philo)
 
 	pthread_create(&th, 0, check_life, philo);
 	/*pthread_detach(th);*/
+	philo->time_of_death = my_time() + philo->all->t_die;
 	if ((philo->id & 1) == 0)
 		usleep(500);
 	while (!philo->all->end)
@@ -69,7 +74,6 @@ void	*start_life(void *this_philo)
 	if (philo->all->end)
 	{
 		pthread_mutex_lock(&philo->all->write);
-		/*printf("%lu %d died\n", my_time() - philo->all->start, philo->id);*/
 	}
 	return (0);
 }
