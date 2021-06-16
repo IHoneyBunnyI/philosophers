@@ -71,9 +71,5 @@ void	*start_life(void *this_philo)
 		usleep(500);
 	while (!philo->all->end)
 		eat_slepp_think(philo);
-	if (philo->all->end)
-	{
-		pthread_mutex_lock(&philo->all->write);
-	}
 	return (0);
 }
