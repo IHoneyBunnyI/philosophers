@@ -34,8 +34,9 @@ void	*check_life(void *this_philo)
 			printf_msg("died", philo);
 			pthread_mutex_lock(&philo->all->write);
 		}
-		usleep(500);
+		usleep(100);
 	}
+	pthread_mutex_unlock(&philo->all->end_mutex);
 	return (0);
 }
 

@@ -29,6 +29,7 @@ void	init_mutex(t_all *all)
 {
 	pthread_mutex_init(&all->write, 0);
 	pthread_mutex_init(&all->end_mutex, 0);
+	pthread_mutex_lock(&all->end_mutex);
 }
 
 void	init_philos(t_all *all)
@@ -76,8 +77,11 @@ int		main(int ac, char **av)
 	i = -1;
 	all.start = my_time();
 	while (++i < all.philosophers_number)
+	{
 		if (pthread_create(&th, 0, start_life, &all.philo[i]))
 			error(&all, 3);
-	pthread_join(th, 0);
+		pthread_detach(th);
+	}
+	pthread_mutex_lock(&all.end_mutex);
 	return 0;
 }
