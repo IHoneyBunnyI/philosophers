@@ -41,6 +41,7 @@ typedef struct	s_all
 	pthread_mutex_t	end_mutex;
 	t_philo *philo;
 	int	end;
+	int	done_eat;
 }				t_all;
 
 void	error(t_all *all, int i);
