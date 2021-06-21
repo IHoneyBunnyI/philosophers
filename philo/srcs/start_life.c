@@ -29,9 +29,10 @@ void	*check_life(void *this_philo)
 		}
 		if (!philo->all->end && philo->state != EATING && my_time() > philo->time_of_death)
 		{
-			philo->all->end = 1;
-			printf_msg("died", philo);
 			pthread_mutex_lock(&philo->all->write);
+			philo->all->end = 1;
+			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
+			/*printf_msg("died", philo);*/
 		}
 		usleep(500);
 	}
