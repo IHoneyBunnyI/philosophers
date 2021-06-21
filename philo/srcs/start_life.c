@@ -20,7 +20,6 @@ void	*check_life(void *this_philo)
 	t_philo *philo;
 
 	philo = this_philo;
-	/*printf("%d\n", philo->all->parsed_times_eat);*/
 	while (!philo->all->end)
 	{
 		if (philo->all->done_eat == philo->all->philosophers_number)
@@ -34,7 +33,7 @@ void	*check_life(void *this_philo)
 			printf_msg("died", philo);
 			pthread_mutex_lock(&philo->all->write);
 		}
-		usleep(100);
+		usleep(500);
 	}
 	pthread_mutex_unlock(&philo->all->end_mutex);
 	return (0);
@@ -72,7 +71,7 @@ void	*start_life(void *this_philo)
 		usleep(500);
 	philo->time_of_death = my_time() + philo->all->t_die;
 	pthread_create(&th, 0, check_life, philo);
-	/*pthread_detach(th);*/
+	pthread_detach(th);
 	while (!philo->all->end)
 		eat_slepp_think(philo);
 	return (0);
