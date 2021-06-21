@@ -84,5 +84,7 @@ int		main(int ac, char **av)
 		pthread_detach(th);
 	}
 	pthread_mutex_lock(&all.end_mutex);
+	pthread_mutex_unlock(&all.end_mutex);
+	free_all(&all);
 	return 0;
 }

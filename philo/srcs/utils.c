@@ -2,7 +2,8 @@
 
 void	free_all(t_all *all)
 {
-	(void)all;
+	free(all->philo);
+	free(all->forks);
 }
 
 void	error(t_all *all, int i)
@@ -50,7 +51,9 @@ unsigned long	my_time()
 
 void	printf_msg(char *msg, t_philo *philo)
 {
-	pthread_mutex_lock(WRITE);
-	printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
-	pthread_mutex_unlock(WRITE);
+	if (pthread_mutex_lock(WRITE) == 0 && !philo->all->end)
+	{
+		printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
+		pthread_mutex_unlock(WRITE);
+	}
 }
