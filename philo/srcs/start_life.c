@@ -43,9 +43,9 @@ void	*check_life(void *this_philo)
 void	eat_slepp_think(t_philo *philo)
 {
 	pthread_mutex_lock(LEFT_FORK);
-	printf_msg("take a left fork", philo);
+	printf_msg("has taken a fork", philo);
 	pthread_mutex_lock(RIGHT_FORK);
-	printf_msg("take a right fork", philo);
+	printf_msg("has taken a fork", philo);
 	philo->time_of_death = my_time() + philo->all->t_die;
 	philo->state = EATING;
 	philo->times_eat++;
