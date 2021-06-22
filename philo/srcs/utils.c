@@ -51,9 +51,7 @@ unsigned long	my_time()
 
 void	printf_msg(char *msg, t_philo *philo)
 {
-	if (pthread_mutex_lock(WRITE) == 0 && !philo->all->end)
-	{
-		printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
-		pthread_mutex_unlock(WRITE);
-	}
+	pthread_mutex_lock(&philo->all->write);
+	printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
+	pthread_mutex_unlock(&philo->all->write);
 }
