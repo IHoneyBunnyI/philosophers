@@ -28,8 +28,10 @@ void	init_forks(t_all *all)
 
 void	init_mutex(t_all *all)
 {
-	pthread_mutex_init(&all->write, 0);
-	pthread_mutex_init(&all->end_mutex, 0);
+	if (pthread_mutex_init(&all->write, 0))
+		error(all, 3);
+	if (pthread_mutex_init(&all->end_mutex, 0))
+		error(all, 3);
 	pthread_mutex_lock(&all->end_mutex);
 }
 
@@ -85,6 +87,7 @@ int		main(int ac, char **av)
 	}
 	pthread_mutex_lock(&all.end_mutex);
 	pthread_mutex_unlock(&all.end_mutex);
+	ft_usleep(500);
 	free_all(&all);
 	return 0;
 }

@@ -56,5 +56,6 @@ unsigned long	my_time();
 void	ft_putnbr(unsigned long n);
 void	*start_life(void *this_philo);
 void	printf_msg(char *msg, t_philo *philo);
+void	ft_usleep(unsigned long ms_sec);
 
 #endif
