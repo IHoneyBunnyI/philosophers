@@ -82,11 +82,12 @@ int		main(int ac, char **av)
 			break;
 		else if (status == 6)
 			all.done_eat++;
-		else if (all.done_eat == all.philosophers_number)
+		if (all.done_eat == all.philosophers_number)
 		{
-			printf("all\n");
+			sem_wait(all.write);
 			break;
 		}
+		/*ft_usleep(100);*/
 	}
 	i = -1;
 	while (++i < all.philosophers_number)
