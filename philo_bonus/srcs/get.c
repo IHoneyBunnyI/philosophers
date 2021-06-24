@@ -30,8 +30,8 @@ int		get_args(t_all *all, int ac, char **av)
 			error(all, 1);
 	}
 	all->philosophers_number = ft_atoi(av[0]);
-	if (all->philosophers_number == 1)
-		error(all, 1);
+	/*if (all->philosophers_number == 1)*/
+		/*error(all, 4);*/
 	all->t_die = ft_atoi(av[1]);
 	all->t_eat = ft_atoi(av[2]);
 	all->t_sleep = ft_atoi(av[3]);
