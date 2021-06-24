@@ -82,7 +82,6 @@ int		main(int ac, char **av)
 	int		i;
 	pthread_t	th;
 
-	i = -1;
 	init_all(&all);
 	if (ac < 5 || ac > 6)
 		error(&all, 1);

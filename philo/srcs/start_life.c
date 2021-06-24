@@ -35,7 +35,6 @@ void	*check_life(void *this_philo)
 			philo->all->end = 1;
 			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
 		}
-		/*usleep(10);*/
 	}
 	pthread_mutex_unlock(&philo->all->end_mutex);
 	return (0);
