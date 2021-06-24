@@ -15,6 +15,8 @@ void	init_all(t_all *all)
 
 void	init_forks(t_all *all)
 {
+	sem_unlink("forks");
+	sem_unlink("write");
 	all->forks = sem_open("forks", O_CREAT | O_EXCL, 644, all->philosophers_number);
 	all->write = sem_open("write", O_CREAT | O_EXCL, 644, 1);
 }
@@ -60,6 +62,7 @@ int		main(int ac, char **av)
 {
 	t_all	all;
 	int	i;
+	int	status;
 
 	init_all(&all);
 	if (ac < 5 || ac > 6)
@@ -71,8 +74,21 @@ int		main(int ac, char **av)
 	all.start = my_time();
 	start_simulation(&all);
 	i = -1;
-	while (1)
-		;
+	while (LIFE)
+	{
+		waitpid(-1, &status, 0);
+		status = status >> 8;
+		if (status == DIED)
+			break;
+		else if (status == 6)
+			all.done_eat++;
+		else if (all.done_eat == all.philosophers_number)
+		{
+			printf("all\n");
+			break;
+		}
+	}
+	i = -1;
 	while (++i < all.philosophers_number)
 		kill(all.philo[i].pid, 9);
 	return 0;

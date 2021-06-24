@@ -11,9 +11,10 @@
 # include <semaphore.h>
 # include <sys/time.h>
 # define THINKING 1
+# define LIFE 1
 # define EATING 2
 # define SLEEPING 3
-# define DIED 4
+# define DIED 5
 # define FORK philo->all->forks
 # define WRITE philo->all->write
 

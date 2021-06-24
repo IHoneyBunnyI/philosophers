@@ -9,17 +9,36 @@ void	ft_usleep(unsigned long ms_sec)
 		usleep(500);
 }
 
+void	*check_life(void *this_philo)
+{
+	t_philo *philo;
+
+	philo = this_philo;
+	while (1)
+	{
+		if (my_time() > philo->time_of_death && philo->state != EATING)
+		{
+			sem_wait(philo->all->write);
+			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
+			exit(DIED);
+		}
+		/*ft_usleep(500);*/
+	}
+	/*pthread_mutex_unlock(&philo->all->end_mutex);*/
+	return (0);
+}
+
 void	eat_slepp_think(t_philo *philo)
 {
-	sem_wait(FORK);
+	sem_wait(philo->all->forks);
 	printf_msg("has taken a fork", philo);
-	sem_wait(FORK);
+	sem_wait(philo->all->forks);
 	printf_msg("has taken a fork", philo);
 	philo->time_of_death = my_time() + philo->all->t_die;
 	philo->state = EATING;
 	philo->times_eat++;
 	if (philo->times_eat == philo->all->parsed_times_eat)
-		philo->all->done_eat++;
+		exit(6);
 	printf_msg("is eating", philo);
 	ft_usleep(philo->all->t_eat);
 	sem_post(FORK);
@@ -33,11 +52,11 @@ void	eat_slepp_think(t_philo *philo)
 
 void	start_life(t_philo *philo)
 {
-	/*pthread_t th;*/
+	pthread_t th;
 
 	philo->time_of_death = my_time() + philo->all->t_die;
-	/*pthread_create(&th, 0, check_life, philo);*/
-	/*pthread_detach(th);*/
+	pthread_create(&th, 0, check_life, philo);
+	pthread_detach(th);
 	while (!philo->all->end)
 		eat_slepp_think(philo);
 	return ;
