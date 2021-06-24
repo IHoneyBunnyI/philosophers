@@ -22,7 +22,6 @@ void	*check_life(void *this_philo)
 			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
 			exit(DIED);
 		}
-		/*ft_usleep(100);*/
 	}
 	return (0);
 }
@@ -41,7 +40,7 @@ void	eat_slepp_think(t_philo *philo)
 	sem_post(FORK);
 	sem_post(FORK);
 	if (philo->times_eat == philo->all->parsed_times_eat)
-		exit(6);
+		exit(FULL);
 	philo->state = SLEEPING;
 	printf_msg("is sleeping", philo);
 	ft_usleep(philo->all->t_sleep);

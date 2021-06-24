@@ -26,15 +26,7 @@ void	init_all(t_all *all)
 		all->colors[i] = color--;
 }
 
-void	init_forks(t_all *all)
-{
-	sem_unlink("forks");
-	sem_unlink("write");
-	all->forks = sem_open("forks", O_CREAT | O_EXCL, 644, all->philosophers_number);
-	all->write = sem_open("write", O_CREAT | O_EXCL, 644, 1);
-}
-
-void	init_philos(t_all *all)
+void	init_philos_forks(t_all *all)
 {
 	int i;
 
@@ -50,6 +42,10 @@ void	init_philos(t_all *all)
 		all->philo[i].times_eat = 0;
 		all->philo[i].pid = 0;
 	}
+	sem_unlink("forks");
+	sem_unlink("write");
+	all->forks = sem_open("forks", O_CREAT | O_EXCL, 644, all->philosophers_number);
+	all->write = sem_open("write", O_CREAT | O_EXCL, 644, 1);
 }
 
 void	start_simulation(t_all *all)
@@ -71,37 +67,39 @@ void	start_simulation(t_all *all)
 	}
 }
 
+void	check_state(t_all *all)
+{
+	int status;
+	while (LIFE)
+	{
+		waitpid(-1, &status, 0);
+		status = status >> 8;
+		if (status == DIED)
+			return ;
+		else if (status == FULL)
+			all->done_eat++;
+		if (all->done_eat == all->philosophers_number)
+		{
+			sem_wait(all->write);
+			return ;
+		}
+	}
+}
+
 int		main(int ac, char **av)
 {
 	t_all	all;
 	int	i;
-	int	status;
 
 	init_all(&all);
 	if (ac < 5 || ac > 6)
 		error(&all, 1);
 	if (!get_args(&all, ac, av + 1))
 		error(&all, 1);
-	init_philos(&all);
-	init_forks(&all);
+	init_philos_forks(&all);
 	all.start = my_time();
 	start_simulation(&all);
-	i = -1;
-	while (LIFE)
-	{
-		waitpid(-1, &status, 0);
-		status = status >> 8;
-		if (status == DIED)
-			break;
-		else if (status == 6)
-			all.done_eat++;
-		if (all.done_eat == all.philosophers_number)
-		{
-			sem_wait(all.write);
-			break;
-		}
-		/*ft_usleep(100);*/
-	}
+	check_state(&all);
 	i = -1;
 	while (++i < all.philosophers_number)
 		kill(all.philo[i].pid, 9);

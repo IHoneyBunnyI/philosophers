@@ -15,6 +15,7 @@
 # define EATING 2
 # define SLEEPING 3
 # define DIED 5
+# define FULL 6
 # define FORK philo->all->forks
 # define WRITE philo->all->write
 
