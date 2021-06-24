@@ -2,6 +2,11 @@
 
 void	init_all(t_all *all)
 {
+	int i;
+	int color;
+
+	i = -1;
+	color = 37;
 	all->philosophers_number = 0;
 	all->t_die = 0;
 	all->t_eat = 0;
@@ -11,6 +16,14 @@ void	init_all(t_all *all)
 	all->philo = 0;
 	all->end = 0;
 	all->done_eat = 0;
+	all->colors = malloc(sizeof(int) * 8);
+	if (!all->colors)
+	{
+		all->colors = 0;
+		error(all, 2);
+	}
+	while (++i < 8)
+		all->colors[i] = color--;
 }
 
 void	init_forks(t_all *all)
@@ -92,5 +105,6 @@ int		main(int ac, char **av)
 	i = -1;
 	while (++i < all.philosophers_number)
 		kill(all.philo[i].pid, 9);
+	free_all(&all);
 	return 0;
 }

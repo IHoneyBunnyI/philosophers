@@ -42,6 +42,7 @@ typedef struct	s_all
 	t_philo *philo;
 	int	end;
 	int	done_eat;
+	int *colors;
 }				t_all;
 
 void	error(t_all *all, int i);
