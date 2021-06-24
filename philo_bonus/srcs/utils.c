@@ -40,3 +40,18 @@ int	ft_atoi(char *str)
 	}
 	return (result * minus);
 }
+
+unsigned long	my_time()
+{
+	struct timeval	t_time;
+
+	gettimeofday(&t_time, 0);
+	return ((t_time.tv_sec * 1000) + (t_time.tv_usec / 1000));
+}
+
+void	printf_msg(char *msg, t_philo *philo)
+{
+	sem_wait(philo->all->write);
+	printf("%lu %d %s\n", my_time() - philo->all->start, philo->id, msg);
+	sem_post(philo->all->write);
+}
