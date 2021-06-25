@@ -2,7 +2,7 @@
 
 void	ft_usleep(unsigned long ms_sec)
 {
-	unsigned long start;
+	unsigned long	start;
 
 	start = my_time();
 	while (my_time() - start < ms_sec)
@@ -11,7 +11,7 @@ void	ft_usleep(unsigned long ms_sec)
 
 void	*check_life(void *this_philo)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = this_philo;
 	while (1)
@@ -37,8 +37,8 @@ void	eat_slepp_think(t_philo *philo)
 	philo->times_eat++;
 	printf_msg("is eating", philo);
 	ft_usleep(philo->all->t_eat);
-	sem_post(FORK);
-	sem_post(FORK);
+	sem_post(philo->all->forks);
+	sem_post(philo->all->forks);
 	if (philo->times_eat == philo->all->parsed_times_eat)
 		exit(FULL);
 	philo->state = SLEEPING;
@@ -50,7 +50,7 @@ void	eat_slepp_think(t_philo *philo)
 
 void	start_life(t_philo *philo)
 {
-	pthread_t th;
+	pthread_t	th;
 
 	philo->time_of_death = my_time() + philo->all->t_die;
 	pthread_create(&th, 0, check_life, philo);

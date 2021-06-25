@@ -2,8 +2,8 @@
 
 void	init_all(t_all *all)
 {
-	int i;
-	int color;
+	int	i;
+	int	color;
 
 	i = -1;
 	color = 37;
@@ -28,9 +28,11 @@ void	init_all(t_all *all)
 
 void	init_philos_forks(t_all *all)
 {
-	int i;
+	int	i;
+	int	philo_num;
 
 	i = -1;
+	philo_num = all->philosophers_number;
 	all->philo = malloc(sizeof(t_philo) * all->philosophers_number);
 	if (!all->philo)
 		error(all, 2);
@@ -44,14 +46,14 @@ void	init_philos_forks(t_all *all)
 	}
 	sem_unlink("forks");
 	sem_unlink("write");
-	all->forks = sem_open("forks", O_CREAT | O_EXCL, 644, all->philosophers_number);
+	all->forks = sem_open("forks", O_CREAT | O_EXCL, 644, philo_num);
 	all->write = sem_open("write", O_CREAT | O_EXCL, 644, 1);
 }
 
 void	start_simulation(t_all *all)
 {
-	int i;
-	pid_t pid;
+	pid_t	pid;
+	int		i;
 
 	i = -1;
 	while (i < all->philosophers_number)
@@ -69,7 +71,8 @@ void	start_simulation(t_all *all)
 
 void	check_state(t_all *all)
 {
-	int status;
+	int	status;
+
 	while (LIFE)
 	{
 		waitpid(-1, &status, 0);
@@ -86,10 +89,10 @@ void	check_state(t_all *all)
 	}
 }
 
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_all	all;
-	int	i;
+	int		i;
 
 	init_all(&all);
 	if (ac < 5 || ac > 6)
@@ -104,5 +107,5 @@ int		main(int ac, char **av)
 	while (++i < all.philosophers_number)
 		kill(all.philo[i].pid, 9);
 	free_all(&all);
-	return 0;
+	return (0);
 }

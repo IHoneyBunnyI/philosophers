@@ -41,7 +41,7 @@ int	ft_atoi(char *str)
 	return (result * minus);
 }
 
-unsigned long	my_time()
+unsigned long	my_time(void)
 {
 	struct timeval	t_time;
 
@@ -51,8 +51,11 @@ unsigned long	my_time()
 
 void	printf_msg(char *msg, t_philo *philo)
 {
-	int color = philo->all->colors[philo->id % 8];
+	int	color;
+
+	color = philo->all->colors[philo->id % 8];
 	sem_wait(philo->all->write);
-	printf("\033[%d;1m%lu %d %s\n\033[0m", color, my_time() - philo->all->start, philo->id, msg);
+	printf("\033[%d;1m%lu %d %s\n\033[0m", \
+	color, my_time() - philo->all->start, philo->id, msg);
 	sem_post(philo->all->write);
 }
