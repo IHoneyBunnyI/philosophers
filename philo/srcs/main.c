@@ -3,8 +3,8 @@
 
 void	init_all(t_all *all)
 {
-	int i;
-	int color;
+	int	i;
+	int	color;
 
 	i = -1;
 	color = 37;
@@ -30,7 +30,7 @@ void	init_all(t_all *all)
 
 void	init_forks(t_all *all)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	all->forks = malloc(sizeof(pthread_mutex_t) * all->philosophers_number);
@@ -51,7 +51,7 @@ void	init_mutex(t_all *all)
 
 void	init_philos(t_all *all)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	all->philo = malloc(sizeof(t_philo) * all->philosophers_number);
@@ -64,7 +64,7 @@ void	init_philos(t_all *all)
 			all->philo[i].left_fork = i;
 			all->philo[i].right_fork = 0;
 		}
-		else 
+		else
 		{
 			all->philo[i].left_fork = i;
 			all->philo[i].right_fork = i + 1;
@@ -76,11 +76,11 @@ void	init_philos(t_all *all)
 	}
 }
 
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_all		all;
-	int		i;
 	pthread_t	th;
+	t_all		all;
+	int			i;
 
 	init_all(&all);
 	if (ac < 5 || ac > 6)
@@ -102,5 +102,5 @@ int		main(int ac, char **av)
 	pthread_mutex_unlock(&all.end_mutex);
 	ft_usleep(500);
 	free_all(&all);
-	return 0;
+	return (0);
 }

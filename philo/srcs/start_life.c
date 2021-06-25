@@ -1,14 +1,8 @@
 #include "philo_one.h"
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-#define LEFT_FORK &philo->all->forks[philo->left_fork]
-#define RIGHT_FORK &philo->all->forks[philo->right_fork]
-#define WRITE &philo->all->write
 
 void	ft_usleep(unsigned long ms_sec)
 {
-	unsigned long start;
+	unsigned long	start;
 
 	start = my_time();
 	while (my_time() - start < ms_sec)
@@ -17,34 +11,34 @@ void	ft_usleep(unsigned long ms_sec)
 
 void	*check_life(void *this_philo)
 {
-	t_philo *philo;
+	t_philo			*p;
 	pthread_mutex_t	*write;
 
-	philo = this_philo;
-	write = &philo->all->write;
-	while (!philo->all->end)
+	p = this_philo;
+	write = &p->all->write;
+	while (!p->all->end)
 	{
-		if (philo->all->done_eat == philo->all->philosophers_number)
+		if (p->all->done_eat == p->all->philosophers_number)
 		{
 			pthread_mutex_lock(write);
-			philo->all->end = 1;
+			p->all->end = 1;
 		}
-		if (my_time() > philo->time_of_death && philo->state != EATING && !philo->all->end)
+		if (my_time() > p->time_of_death && p->state != EATING && !p->all->end)
 		{
 			pthread_mutex_lock(write);
-			philo->all->end = 1;
-			printf("%lu %d died\n", my_time() - philo->all->start, philo->id);
+			p->all->end = 1;
+			printf("%lu %d died\n", my_time() - p->all->start, p->id);
 		}
 	}
-	pthread_mutex_unlock(&philo->all->end_mutex);
+	pthread_mutex_unlock(&p->all->end_mutex);
 	return (0);
 }
 
 void	eat_slepp_think(t_philo *philo)
 {
-	pthread_mutex_lock(LEFT_FORK);
+	pthread_mutex_lock(&philo->all->forks[philo->left_fork]);
 	printf_msg("has taken a fork", philo);
-	pthread_mutex_lock(RIGHT_FORK);
+	pthread_mutex_lock(&philo->all->forks[philo->right_fork]);
 	printf_msg("has taken a fork", philo);
 	philo->time_of_death = my_time() + philo->all->t_die;
 	philo->state = EATING;
@@ -53,8 +47,8 @@ void	eat_slepp_think(t_philo *philo)
 		philo->all->done_eat++;
 	printf_msg("is eating", philo);
 	ft_usleep(philo->all->t_eat);
-	pthread_mutex_unlock(LEFT_FORK);
-	pthread_mutex_unlock(RIGHT_FORK);
+	pthread_mutex_unlock(&philo->all->forks[philo->left_fork]);
+	pthread_mutex_unlock(&philo->all->forks[philo->right_fork]);
 	philo->state = SLEEPING;
 	printf_msg("is sleeping", philo);
 	ft_usleep(philo->all->t_sleep);
@@ -64,8 +58,8 @@ void	eat_slepp_think(t_philo *philo)
 
 void	*start_life(void *this_philo)
 {
-	t_philo *philo;
-	pthread_t th;
+	t_philo		*philo;
+	pthread_t	th;
 
 	philo = this_philo;
 	if ((philo->id & 1) == 0)

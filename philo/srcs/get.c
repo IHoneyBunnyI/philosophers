@@ -1,8 +1,8 @@
 #include "philo_one.h"
 
-int		valid_arg(char *arg)
+int	valid_arg(char *arg)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (arg[++i])
@@ -13,9 +13,9 @@ int		valid_arg(char *arg)
 	return (1);
 }
 
-int		get_args(t_all *all, int ac, char **av)
+int	get_args(t_all *all, int ac, char **av)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (av[++i])
