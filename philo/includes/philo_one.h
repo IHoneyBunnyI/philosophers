@@ -53,7 +53,6 @@ void			ft_putnbr(unsigned long n);
 void			*start_life(void *this_philo);
 void			printf_msg(char *msg, t_philo *philo);
 void			ft_usleep(unsigned long ms_sec);
-
 int				ft_atoi(char *str);
 int				get_args(t_all *all, int ac, char **av);
 
